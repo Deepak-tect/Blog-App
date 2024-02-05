@@ -18,6 +18,8 @@ import com.blog.blogingapp.Payloads.ResponseUser;
 import com.blog.blogingapp.Services.UserService;
 import com.blog.blogingapp.Utils.ApiResponse;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/user")
@@ -29,13 +31,13 @@ public class UserController {
 
     
     @PostMapping("/")
-    public ResponseEntity<ApiResponse<ResponseUser>> createUser(@RequestBody ResponseUser responseUser){
+    public ResponseEntity<ApiResponse<ResponseUser>> createUser(@Valid @RequestBody ResponseUser responseUser){
         ResponseUser result = userService.createUser(responseUser);
         return new ResponseEntity<>(new ApiResponse<>(200, result, "Created successfully"), HttpStatus.CREATED);
     } 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResponseUser>> updatedUser(@PathVariable("id") int id, @RequestBody ResponseUser responseUser) {
+    public ResponseEntity<ApiResponse<ResponseUser>> updatedUser(@PathVariable("id") int id, @Valid @RequestBody ResponseUser responseUser) {
         ResponseUser result = userService.updateUser(responseUser, id);
         return new ResponseEntity<>(new ApiResponse<>(200, result, "Updated successfully"), HttpStatus.OK);
     }
