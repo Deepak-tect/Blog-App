@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,17 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public User responseToUser(ResponseUser responseUser){
-        User user = new User(responseUser.getId(), responseUser.getName() , responseUser.getEmail(), responseUser.getPassword() , responseUser.getAbout());
+        // User user = new User(responseUser.getId(), responseUser.getName() , responseUser.getEmail(), responseUser.getPassword() , responseUser.getAbout());
+        User user = this.modelMapper.map(responseUser, User.class);
         return user;
     }
     public ResponseUser userToResponse(User user){
-        ResponseUser responseUser = new ResponseUser(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getAbout());
+        // ResponseUser responseUser = new ResponseUser(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getAbout());
+        ResponseUser responseUser = this.modelMapper.map(user, ResponseUser.class);
         return responseUser;
     }
 
