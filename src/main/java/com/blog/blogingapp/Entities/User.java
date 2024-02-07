@@ -1,7 +1,5 @@
 package com.blog.blogingapp.Entities;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.*;
 
 @Entity
 @Table(name="Users")
@@ -28,13 +27,13 @@ public class User {
     private String password;
     @Column(name="About")
     private String about;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<Post> posts = new ArrayList<>(); 
-    
+
     
     public User() {
     }
+
 
     public User(int id, String name, String email, String password, String about, List<Post> posts) {
         this.id = id;
@@ -44,7 +43,7 @@ public class User {
         this.about = about;
         this.posts = posts;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -85,33 +84,21 @@ public class User {
         this.about = about;
     }
 
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", about=" + about
-                + "]";
-    }
-
-
-
-
-
-
-
-
     public List<Post> getPosts() {
         return posts;
     }
 
-
-
-
-
-
-
-
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", about=" + about
+                + ", posts=" + posts + "]";
+    }
+
+    
+
 
 }

@@ -1,7 +1,6 @@
 package com.blog.blogingapp.Entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -26,9 +25,8 @@ public class Category {
 
     public Category() {
     }
-
     
-    public Category(int id, String title, String description, List<Post> categories) {
+    public Category(int id, String title, String description, List<Post> posts) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -56,14 +54,6 @@ public class Category {
     }
 
 
-    public List<Post> getCategories() {
-        return posts;
-    }
-
-
-    public void setCategories(List<Post> categories) {
-        this.posts = posts;
-    }
 
 
     public List<Post> getPosts() {
@@ -71,9 +61,31 @@ public class Category {
     }
 
 
+
+
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+
+    // public List<Post> getCategories() {
+    //     return posts;
+    // }
+
+
+    // public void setCategories(List<Post> categories) {
+    //     this.posts = posts;
+    // }
+
+
+    // public List<Post> getPosts() {
+    //     return posts;
+    // }
+
+
+    // public void setPosts(List<Post> posts) {
+    //     this.posts = posts;
+    // }
     
 
 }
