@@ -1,6 +1,7 @@
 package com.blog.blogingapp.Payloads;
 
 public class ResponsePost {
+    private int id;
     private String title;
     private String content;
     private String imageName;
@@ -9,12 +10,21 @@ public class ResponsePost {
     public ResponsePost() {
     }
     
-    public ResponsePost(String title, String content, String imageName, ResponseUser user, ResponseCategory category) {
+    public ResponsePost(int id, String title, String content, String imageName, ResponseUser user, ResponseCategory category) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.imageName = imageName;
         this.user = user;
         this.category = category;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
