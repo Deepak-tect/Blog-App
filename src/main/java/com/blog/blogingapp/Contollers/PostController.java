@@ -62,19 +62,19 @@ public class PostController {
     @GetMapping("/post/{id}")
     public ResponseEntity<ApiResponse<ResponsePost>> getPostById(@PathVariable int id) {
         ResponsePost result = this.postService.getPostById(id);
-        return new ResponseEntity<>(new ApiResponse<>(201, result, "Successfully fetched Post"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(200, result, "Successfully fetched Post"), HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}/post")
     public ResponseEntity<ApiResponse<List<ResponsePost>>> getPostByUser(@PathVariable int id) {
         List<ResponsePost> result = this.postService.getPostOfUser(id);
-        return new ResponseEntity<>(new ApiResponse<>(201, result, "Successfully fetched post using user"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(200, result, "Successfully fetched post using user"), HttpStatus.OK);
     }
 
     @GetMapping("/category/{id}/post")
     public ResponseEntity<ApiResponse<List<ResponsePost>>> getPostByCategory(@PathVariable int id) {
         List<ResponsePost> result = this.postService.getPostOfCategory(id);
-        return new ResponseEntity<>(new ApiResponse<>(201, result, "Successfully fetched post using category"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(200, result, "Successfully fetched post using category"), HttpStatus.OK);
     }
 
     @GetMapping("/post/search/{keyword}")

@@ -1,12 +1,15 @@
 package com.blog.blogingapp.Entities;
 
 import java.sql.Date;
+import java.util.*;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Post {
@@ -25,11 +28,19 @@ public class Post {
     @ManyToOne
     private Category category;
 
+
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
     public Post() {
     }
     
 
-    public Post(int id, String title, String content, String imageName, Date addedDate, User user, Category category) {
+    
+
+
+    public Post(int id, String title, String content, String imageName, Date addedDate, User user, Category category,
+            List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -37,7 +48,11 @@ public class Post {
         this.addedDate = addedDate;
         this.user = user;
         this.category = category;
+        this.comments = comments;
     }
+
+
+
 
 
     public int getId() {
@@ -94,6 +109,14 @@ public class Post {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
 
