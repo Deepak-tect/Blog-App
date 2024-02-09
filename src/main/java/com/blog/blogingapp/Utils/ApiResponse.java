@@ -1,5 +1,7 @@
 package com.blog.blogingapp.Utils;
 
+import com.blog.blogingapp.Payloads.ResponsePost;
+
 public class ApiResponse<T> {
     private int statusCode;
     private T data;
@@ -11,6 +13,10 @@ public class ApiResponse<T> {
         this.data = data;
         this.message = message;
         this.success = statusCode < 400;
+    }
+
+    public ApiResponse(String string, ResponsePost result, String message2) {
+        //TODO Auto-generated constructor stub
     }
 
     public int getStatusCode() {

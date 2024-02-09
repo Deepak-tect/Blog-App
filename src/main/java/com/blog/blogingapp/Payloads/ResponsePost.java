@@ -63,6 +63,13 @@ public class ResponsePost {
     public void setCategory(ResponseCategory category) {
         this.category = category;
     }
+
+    @Override
+    public String toString() {
+        return "ResponsePost [id=" + id + ", title=" + title + ", content=" + content + ", imageName=" + imageName
+                + ", user=" + user + ", category=" + category + "]";
+    }
+    
     
     
 }

@@ -1,8 +1,10 @@
 package com.blog.blogingapp.Contollers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.blog.blogingapp.Payloads.ApiPageResponse;
 import com.blog.blogingapp.Payloads.ResponsePost;
 import com.blog.blogingapp.Services.PostService;
+import com.blog.blogingapp.Services.UploadFile;
 import com.blog.blogingapp.Utils.ApiResponse;
-
 
 
 
@@ -27,6 +30,11 @@ public class PostController {
     
     @Autowired
     private PostService postService;
+    @Autowired
+    private UploadFile uploadFile;
+
+    @Value("${project.image}")
+    private String path;
 
     @PostMapping("/user/{userId}/category/{categoryId}/post")
     public ResponseEntity<ApiResponse<ResponsePost>> createPost(@RequestBody ResponsePost responsePost, @PathVariable int userId , @PathVariable int categoryId) {
@@ -74,9 +82,18 @@ public class PostController {
         List<ResponsePost> result = this.postService.getPostBytitle(keyword);
         return new ResponseEntity<>(new ApiResponse<>(200, result, "Successfully fetched data"),HttpStatus.OK);
     }
+
+    @PostMapping("/post/{id}/image")
+    public ResponseEntity<ApiResponse<ResponsePost>> uploadFileController(@PathVariable("id") int id , @RequestParam("image") MultipartFile file
+    ) throws IOException {
     
-    
-    
-    
+        String relativePath = this.path;
+       
+        ResponsePost post = this.postService.getPostById(id);
+        String name = this.uploadFile.UploadFileByPath(relativePath, file);
+        post.setImageName(name);
+        ResponsePost result = this.postService.updatePost(post, id);
+        return new ResponseEntity<>(new ApiResponse<>(200, result, "successfully uploaded image"), HttpStatus.OK);
+    }
     
 }
