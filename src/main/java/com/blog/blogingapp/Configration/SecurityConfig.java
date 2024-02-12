@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import com.blog.blogingapp.Security.JwtAuthenticationEntryPoint;
 import com.blog.blogingapp.Security.JwtAuthenticationFilter;
 
 @Configuration
+@EnableGlobalAuthentication
 public class SecurityConfig {
 
     @Autowired
@@ -41,7 +43,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
             .cors(cors->cors.disable())
             // .authorizeHttpRequests(auth->auth.requestMatchers("/home/**").authenticated().requestMatchers("/api/v1/auth/login").permitAll().anyRequest().authenticated())
-            .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/login").permitAll().anyRequest().authenticated())
+            .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/**").permitAll().requestMatchers("/api/user/").hasRole("ADMIN").anyRequest().authenticated())
             .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

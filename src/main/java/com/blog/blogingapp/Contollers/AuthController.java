@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blog.blogingapp.Payloads.ResponseUser;
 import com.blog.blogingapp.Security.CustomUserDetailService;
 import com.blog.blogingapp.Security.JwtHelper;
+import com.blog.blogingapp.Services.UserService;
+import com.blog.blogingapp.Utils.ApiResponse;
 import com.blog.blogingapp.Utils.JwtRequest;
 import com.blog.blogingapp.Utils.JwtResponse;
 
@@ -27,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager manager;
+
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
@@ -63,8 +69,9 @@ public class AuthController {
         return "Credentials Invalid !!";
     }
 
-    // @PostMapping("/create-user")
-    // public User createUser(@RequestBody User user){
-    //     return this.userService.createUsers(user);
-    // }
+    @PostMapping("/create-user")
+    public ResponseEntity<ApiResponse<ResponseUser>> createUser(@RequestBody ResponseUser user){
+        ResponseUser result = this.userService.RegisterUser(user);
+        return new ResponseEntity<>(new ApiResponse<>(201, result, "Successfully created user"), HttpStatus.CREATED);
+    }
 }
